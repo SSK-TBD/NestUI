@@ -1,0 +1,21 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Elevation tokens — NestUI light mode. Source of truth: this file.",
+  "elevation": {
+    "$description": "z-index はこのスケールのみ。shadow は浮遊要素のみ。",
+    "z": {
+      "base":     { "$value": 0,  "$type": "number" },
+      "dropdown": { "$value": 20, "$type": "number", "$description": "ドロップダウン・ポップオーバー・ツールチップ・メニュー（z-20）。" },
+      "sticky":   { "$value": 30, "$type": "number", "$description": "固定ヘッダー等。" },
+      "overlay":  { "$value": 40, "$type": "number", "$description": "ドロワー・オーバーレイ。" },
+      "modal":    { "$value": 50, "$type": "number", "$description": "モーダル（z-50）。" },
+      "toast":    { "$value": 60, "$type": "number", "$description": "トースト（modal より上。基本トークンに無い拡張）。" }
+    },
+    "shadow": {
+      "none": { "$value": "none",                        "$type": "shadow" },
+      "sm":   { "$value": "0 1px 2px rgba(0,0,0,0.05)",  "$type": "shadow", "$description": "shadow-sm: カード等。" },
+      "md":   { "$value": "0 4px 6px rgba(0,0,0,0.1)",   "$type": "shadow", "$description": "shadow-md: ドロップダウン・ポップオーバー。" },
+      "lg":   { "$value": "0 20px 25px rgba(0,0,0,0.1)", "$type": "shadow", "$description": "shadow-xl: モーダル・ドロワー（overlay）。" }
+    }
+  }
+}

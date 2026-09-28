@@ -1,0 +1,93 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Color tokens — NestUI light mode. Primitive scales (primary/brand/status) + semantic layer (surface/content/border/semantic). Source of truth: this file (NestUI tokens / Figma Variables).",
+  "color": {
+    "primary": {
+      "$description": "操作色（Operation Blue, Blue 700 ベース）。CTA・アクティブ・主要インタラクション。",
+      "50":  { "$value": "#F0F7FE", "$type": "color" },
+      "100": { "$value": "#DDEDFC", "$type": "color" },
+      "200": { "$value": "#C2E0FB", "$type": "color" },
+      "300": { "$value": "#98CDF8", "$type": "color" },
+      "400": { "$value": "#67B2F3", "$type": "color" },
+      "500": { "$value": "#4493ED", "$type": "color" },
+      "600": { "$value": "#2B74E1", "$type": "color" },
+      "700": { "$value": "#2661CF", "$type": "color", "$description": "主操作色（CTA / focus ring）。" },
+      "800": { "$value": "#2550A8", "$type": "color" },
+      "900": { "$value": "#234585", "$type": "color" },
+      "950": { "$value": "#1A2C51", "$type": "color" }
+    },
+    "brand": {
+      "$description": "ブランドカラー（Brand Blue, teal）。ブランド表現。操作色とは別。",
+      "50":  { "$value": "#F0FAFB", "$type": "color" },
+      "100": { "$value": "#D8F0F5", "$type": "color" },
+      "200": { "$value": "#B6E1EB", "$type": "color" },
+      "300": { "$value": "#84CBDC", "$type": "color" },
+      "400": { "$value": "#4BACC5", "$type": "color" },
+      "500": { "$value": "#0098B9", "$type": "color", "$description": "Brand Blue（ブランド基準色）。" },
+      "600": { "$value": "#2A7590", "$type": "color" },
+      "700": { "$value": "#285F76", "$type": "color" },
+      "800": { "$value": "#285062", "$type": "color" },
+      "900": { "$value": "#254454", "$type": "color" },
+      "950": { "$value": "#142B38", "$type": "color" }
+    },
+    "status": {
+      "$description": "ステータスのプリミティブ。base=識別色 / fill=塗り / container=背景 / text=文字（コントラスト確保）。",
+      "success": {
+        "base":      { "$value": "#7ACF46", "$type": "color" },
+        "fill":      { "$value": "#5EB62C", "$type": "color" },
+        "container": { "$value": "#F2FBEA", "$type": "color" },
+        "text":      { "$value": "#376F1C", "$type": "color" }
+      },
+      "warning": {
+        "base":      { "$value": "#EE8C29", "$type": "color" },
+        "fill":      { "$value": "#EE8C29", "$type": "color" },
+        "container": { "$value": "#FEF8EE", "$type": "color" },
+        "text":      { "$value": "#B95415", "$type": "color" }
+      },
+      "danger": {
+        "base":      { "$value": "#E93766", "$type": "color" },
+        "fill":      { "$value": "#E93766", "$type": "color" },
+        "container": { "$value": "#FEF2F4", "$type": "color" },
+        "text":      { "$value": "#B51B4E", "$type": "color" }
+      }
+    },
+    "surface": {
+      "base":    { "$value": "#F7F9FB", "$type": "color", "$description": "ページ背景（bg-page）。" },
+      "raised":  { "$value": "#ffffff", "$type": "color", "$description": "カード・パネル（bg-surface）。" },
+      "overlay": { "$value": "#ffffff", "$type": "color", "$description": "モーダル・ドロワー等の浮遊面。" },
+      "input":   { "$value": "#ffffff", "$type": "color", "$description": "入力欄背景（input-bg）。" },
+      "sunken":  { "$value": "#EDF0F3", "$type": "color", "$description": "一段沈めた面（bg-page-alt / サイドバー等）。" }
+    },
+    "content": {
+      "primary":   { "$value": "#081A27", "$type": "color", "$description": "本文・見出し（text-default / text-heading）。" },
+      "secondary": { "$value": "#5A6C7F", "$type": "color", "$description": "補助テキスト（text-muted）。" },
+      "disabled":  { "$value": "#A1AFC0", "$type": "color", "$description": "無効テキスト・アイコン。" },
+      "inverse":   { "$value": "#ffffff", "$type": "color", "$description": "操作色/濃色面上のテキスト。" }
+    },
+    "border": {
+      "default": { "$value": "#C4CDD9", "$type": "color", "$description": "標準ボーダー（border-default / input-border）。" },
+      "subtle":  { "$value": "#DDE3EB", "$type": "color", "$description": "区切り線・低強調。" },
+      "strong":  { "$value": "#7B8D9F", "$type": "color", "$description": "強調ボーダー（border-strong）。" },
+      "focus":   { "$value": "#2661CF", "$type": "color", "$description": "フォーカスリング（= primary-700）。" }
+    },
+    "semantic": {
+      "error":     { "$value": "#E93766", "$type": "color", "$description": "バリデーションエラー・破壊的操作（= status.danger.base）。" },
+      "errorBg":   { "$value": "#FEF2F4", "$type": "color", "$description": "= status.danger.container。" },
+      "warning":   { "$value": "#EE8C29", "$type": "color", "$description": "警告（= status.warning.base）。" },
+      "warningBg": { "$value": "#FEF8EE", "$type": "color", "$description": "= status.warning.container。" },
+      "success":   { "$value": "#7ACF46", "$type": "color", "$description": "成功・確定（= status.success.base）。" },
+      "successBg": { "$value": "#F2FBEA", "$type": "color", "$description": "= status.success.container。" },
+      "info":      { "$value": "#2661CF", "$type": "color", "$description": "情報（= primary-700）。" },
+      "infoBg":    { "$value": "#F0F7FE", "$type": "color", "$description": "= primary-50。" }
+    },
+    "wireframe": {
+      "$description": "低忠実度ワイヤーフレーム用（NestUI wireframe）。",
+      "bg":       { "$value": "#FFFFFF", "$type": "color" },
+      "surface":  { "$value": "#F5F5F5", "$type": "color" },
+      "border":   { "$value": "#E0E0E0", "$type": "color" },
+      "text":     { "$value": "#333333", "$type": "color" },
+      "text-sub": { "$value": "#888888", "$type": "color" },
+      "accent":   { "$value": "#666666", "$type": "color" }
+    }
+  }
+}

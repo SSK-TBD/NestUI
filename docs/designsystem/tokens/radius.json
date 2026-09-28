@@ -1,0 +1,13 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Radius tokens — NestUI light mode. Source of truth: this file.",
+  "radius": {
+    "$description": "コンポーネントはこの値のいずれかを使う。角丸と角張りを同一 View で混在させない。",
+    "none": { "$value": "0px",    "$type": "dimension" },
+    "sm":   { "$value": "4px",    "$type": "dimension", "$description": "標準（rounded）: ボタン・入力・バッジ・チップ。" },
+    "md":   { "$value": "8px",    "$type": "dimension", "$description": "rounded-lg: カード・パネル。" },
+    "lg":   { "$value": "12px",   "$type": "dimension", "$description": "rounded-xl: 大きめカード・モーダル（token スケール最大）。" },
+    "xl":   { "$value": "16px",   "$type": "dimension", "$description": "拡張（基本トークンは lg=12px が最大。それ以上が要る場合のみ）。" },
+    "full": { "$value": "9999px", "$type": "dimension", "$description": "Pill / 円形: トグル・アバター・タグ。" }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Motion tokens — NestUI light mode. Source of truth: this file.",
+  "motion": {
+    "$description": "アニメーションはデータ更新・状態変化のみ。装飾アニメーション禁止。",
+    "duration": {
+      "instant": { "$value": "0ms",   "$type": "duration" },
+      "fast":    { "$value": "150ms", "$type": "duration", "$description": "ホバー・フォーカス等のマイクロインタラクション。" },
+      "normal":  { "$value": "200ms", "$type": "duration", "$description": "展開・折りたたみ等のコンポーネント遷移。" },
+      "slow":    { "$value": "300ms", "$type": "duration", "$description": "ページ遷移・モーダル。" }
+    },
+    "easing": {
+      "default":    { "$value": "cubic-bezier(0.4, 0, 0.2, 1)", "$type": "cubicBezier", "$description": "標準 UI 遷移（ease-in-out）。" },
+      "decelerate": { "$value": "cubic-bezier(0, 0, 0.2, 1)",   "$type": "cubicBezier", "$description": "画面に入る要素（ease-out）。" },
+      "accelerate": { "$value": "cubic-bezier(0.4, 0, 1, 1)",   "$type": "cubicBezier", "$description": "画面から出る要素（ease-in）。" }
+    }
+  }
+}

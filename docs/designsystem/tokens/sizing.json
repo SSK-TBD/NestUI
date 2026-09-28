@@ -1,0 +1,52 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Sizing tokens — NestUI light mode. Source of truth: this file.",
+  "sizing": {
+    "max-width": {
+      "xs": {
+        "$value": "320px",
+        "$type": "dimension"
+      },
+      "small": {
+        "$value": "384px",
+        "$type": "dimension"
+      },
+      "medium": {
+        "$value": "448px",
+        "$type": "dimension"
+      },
+      "large": {
+        "$value": "512px",
+        "$type": "dimension"
+      },
+      "xl": {
+        "$value": "576px",
+        "$type": "dimension"
+      },
+      "2xl": {
+        "$value": "672px",
+        "$type": "dimension"
+      },
+      "3xl": {
+        "$value": "768px",
+        "$type": "dimension"
+      },
+      "4xl": {
+        "$value": "896px",
+        "$type": "dimension"
+      },
+      "5xl": {
+        "$value": "1024px",
+        "$type": "dimension"
+      },
+      "6xl": {
+        "$value": "1152px",
+        "$type": "dimension"
+      },
+      "7xl": {
+        "$value": "1280px",
+        "$type": "dimension"
+      }
+    }
+  }
+}

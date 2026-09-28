@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Pane-2T — Sub（上）+ Main</title>
+  <style>
+    /*
+      Pane-2T: 補助ペインが Top
+      上に Sub（Tabs・Filter Bar 等）、下に Main。
+    */
+
+    /* === Design Tokens === */
+    :root {
+      --color-brand-primary:     #2661CF;
+      --color-surface-base:      #F7F9FB;
+      --color-surface-raised:    #ffffff;
+      --color-content-primary:   #081A27;
+      --color-content-secondary: #5A6C7F;
+      --color-border-default:    #C4CDD9;
+      --color-border-subtle:     #DDE3EB;
+
+      --spacing-1:  4px;  --spacing-2:  8px;  --spacing-3: 12px;
+      --spacing-4: 16px;  --spacing-6: 24px;  --spacing-8: 32px;
+      --spacing-10: 40px; --spacing-12: 48px;
+
+      --layout-sidenav-width:   188px;
+      --layout-navbar-height:   68px;
+      --layout-content-padding: 32px;
+
+      --font-family-base: "Noto Sans JP", system-ui, -apple-system, sans-serif;
+      --font-size-xs: 11px; --font-size-sm: 12px; --font-size-md: 14px;
+      --font-size-lg: 16px; --font-size-xl: 21px; --font-size-2xl: 20px;
+      --font-size-3xl: 24px; --font-size-4xl: 30px;
+      --font-weight-regular: 400; --font-weight-medium: 500; --font-weight-bold: 700;
+      --line-height-tight: 1.4; --line-height-normal: 1.5; --line-height-relaxed: 2.0;
+
+      --radius-none: 0px; --radius-sm: 4px; --radius-md: 8px;
+      --radius-lg: 12px; --radius-xl: 16px; --radius-full: 9999px;
+
+      --z-base: 0; --z-raised: 10; --z-dropdown: 100;
+      --z-drawer: 200; --z-modal: 300; --z-toast: 400;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.16);
+
+      --duration-fast: 100ms; --duration-normal: 200ms; --duration-slow: 350ms;
+      --easing-default: cubic-bezier(0.2, 0, 0, 1);
+
+      /* Pane sizing — override as needed */
+      --pane-sub-height: 48px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-family-base);
+      font-size: var(--font-size-md);
+      color: var(--color-content-primary);
+      background-color: var(--color-surface-base);
+      min-height: 100vh;
+    }
+
+    /* === App Shell === */
+    .app-shell {
+      display: grid;
+      grid-template-columns: var(--layout-sidenav-width) 1fr;
+      grid-template-rows: var(--layout-navbar-height) 1fr;
+      grid-template-areas:
+        "sidenav navbar"
+        "sidenav main";
+      min-height: 100vh;
+    }
+
+    .sidenav {
+      grid-area: sidenav;
+      background-color: var(--color-surface-raised);
+      border-right: 1px solid var(--color-border-default);
+      position: sticky; top: 0; height: 100vh;
+      display: flex; flex-direction: column;
+    }
+    .sidenav__header {
+      height: var(--layout-navbar-height);
+      display: flex; align-items: center;
+      padding: 0 var(--spacing-4);
+      border-bottom: 1px solid var(--color-border-default);
+      flex-shrink: 0;
+    }
+    .sidenav__body { flex: 1; padding: var(--spacing-4) 0; overflow-y: auto; }
+
+    .navbar {
+      grid-area: navbar;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 var(--layout-content-padding);
+      background-color: var(--color-surface-raised);
+      border-bottom: 1px solid var(--color-border-default);
+      position: sticky; top: 0; z-index: var(--z-raised);
+    }
+    .navbar__left  { display: flex; align-items: center; gap: var(--spacing-4); }
+    .navbar__right { display: flex; align-items: center; gap: var(--spacing-3); }
+
+    .main { grid-area: main; overflow-y: auto; }
+    .main__inner {
+      max-width: 1280px;
+      padding: var(--layout-content-padding);
+      height: 100%;
+    }
+
+    /* === Pane-2T: Sub（上）+ Main === */
+    .pane-2t {
+      display: grid;
+      grid-template-rows: var(--pane-sub-height) 1fr;
+      grid-template-areas:
+        "sub"
+        "main";
+      gap: var(--spacing-4);
+      min-height: calc(100vh - var(--layout-navbar-height));
+    }
+    .pane-2t .zone--sub  { grid-area: sub; }
+    .pane-2t .zone--main { grid-area: main; }
+
+    /* === Zone visual styles (reference display) === */
+    [class^="zone--"], [class*=" zone--"] {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      border-radius: var(--radius-md);
+    }
+    .zone--main {
+      background-color: rgba(38, 97, 207, 0.06);
+      border: 1px dashed rgba(38, 97, 207, 0.3);
+      color: var(--color-brand-primary);
+    }
+    .zone--sub, .zone--sub1, .zone--sub2 {
+      background-color: rgba(90, 108, 127, 0.06);
+      border: 1px dashed rgba(90, 108, 127, 0.25);
+      color: var(--color-content-secondary);
+    }
+    .zone--helper {
+      background-color: rgba(90, 108, 127, 0.06);
+      border: 1px dashed rgba(90, 108, 127, 0.25);
+      color: var(--color-content-secondary);
+    }
+  </style>
+</head>
+<body>
+<div class="app-shell">
+
+  <nav class="sidenav">
+    <div class="sidenav__header"><!-- Logo / App name --></div>
+    <div class="sidenav__body"><!-- Side nav component --></div>
+  </nav>
+
+  <header class="navbar">
+    <div class="navbar__left"><!-- Breadcrumbs --></div>
+    <div class="navbar__right"><!-- Actions / User menu --></div>
+  </header>
+
+  <main class="main">
+    <div class="main__inner">
+      <div class="pane-2t">
+
+        <div class="zone--sub">
+          <!-- Sub: Tabs / Filter Bar / Steps -->
+        </div>
+
+        <div class="zone--main">
+          <!-- Main content -->
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+</div>
+</body>
+</html>

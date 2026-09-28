@@ -1,0 +1,161 @@
+NestUI
+Copyright (c) 2026 Canary Inc.
+
+This product is licensed under the MIT License (see LICENSE), except for the
+third-party material and trademarks listed below.
+
+================================================================================
+Trademarks
+================================================================================
+
+"カナリー", "Canary", "カナリークラウド", "Canary Cloud", "NestUI" and the related
+names and logos are trademarks of Canary Inc. They are not licensed under the
+MIT License. The MIT License does not grant permission to use these names or
+logos, except as required for reasonable and customary use in describing the
+origin of this work.
+
+「カナリー」「Canary」「カナリークラウド」「Canary Cloud」「NestUI」の名称およびロゴは
+Canary Inc. の商標であり、MIT License の対象外です。本リポジトリの出自を示すための
+通常の範囲を超えて、これらの名称・ロゴを使用することは許諾していません。
+
+================================================================================
+Third-party material
+================================================================================
+
+SVG path data from the icon sets below is embedded inline in this repository.
+The icons are used as-is or with small changes (stroke width, size, class names).
+
+--------------------------------------------------------------------------------
+Lucide (https://lucide.dev/) — ISC License (Feather-derived icons: MIT License)
+--------------------------------------------------------------------------------
+
+Files:
+
+- docs/designsystem/components/base/display/Alerts.md
+- docs/designsystem/components/base/display/Status tag.md
+- docs/designsystem/components/base/display/Toast.md
+- docs/designsystem/components/base/form/Date Picker.md
+- docs/designsystem/components/base/layout/Drawer.md
+- docs/designsystem/components/base/navigation/Breadcrumbs.md
+- docs/designsystem/components/base/navigation/Navbars.md
+- docs/designsystem/gallery/index.html
+
+Icons: alert-triangle, calendar, check, chevron-down, chevron-right,
+circle-alert, info, pencil, x
+
+ISC License
+
+Copyright (c) 2026 Lucide Icons and Contributors
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+---
+
+The following Lucide icons are derived from the Feather project:
+
+airplay, alert-circle, alert-octagon, alert-triangle, aperture, arrow-down-circle, arrow-down-left, arrow-down-right, arrow-down, arrow-left-circle, arrow-left, arrow-right-circle, arrow-right, arrow-up-circle, arrow-up-left, arrow-up-right, arrow-up, at-sign, calendar, cast, check, chevron-down, chevron-left, chevron-right, chevron-up, chevrons-down, chevrons-left, chevrons-right, chevrons-up, circle, clipboard, clock, code, columns, command, compass, corner-down-left, corner-down-right, corner-left-down, corner-left-up, corner-right-down, corner-right-up, corner-up-left, corner-up-right, crosshair, database, divide-circle, divide-square, dollar-sign, download, external-link, feather, frown, hash, headphones, help-circle, info, italic, key, layout, life-buoy, link-2, link, loader, lock, log-in, log-out, maximize, meh, minimize, minimize-2, minus-circle, minus-square, minus, monitor, moon, more-horizontal, more-vertical, move, music, navigation-2, navigation, octagon, pause-circle, percent, plus-circle, plus-square, plus, power, radio, rss, search, server, share, shopping-bag, sidebar, smartphone, smile, square, table-2, tablet, target, terminal, trash-2, trash, triangle, tv, type, upload, x-circle, x-octagon, x-square, x, zoom-in, zoom-out
+
+The MIT License (MIT) (for the icons listed above)
+
+Copyright (c) 2013-present Cole Bemis
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+--------------------------------------------------------------------------------
+Heroicons v1 (https://heroicons.com/) — MIT License
+--------------------------------------------------------------------------------
+
+Files:
+
+- docs/designsystem/components/base/form/Dropdown.md
+- docs/designsystem/components/base/form/Text field.md
+- docs/designsystem/components/base/layout/Dropdown menu.md
+- docs/designsystem/components/base/layout/Modals.md
+- docs/designsystem/components/base/navigation/List Group.md
+- docs/designsystem/gallery/index.html
+
+Icons (outline): chevron-down, chevron-right, chevron-up, logout, user, x
+
+MIT License
+
+Copyright (c) 2020 Refactoring UI Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+--------------------------------------------------------------------------------
+Material Icons (https://fonts.google.com/icons) — Apache License 2.0
+--------------------------------------------------------------------------------
+
+Files:
+
+- docs/designsystem/components/base/form/Text field.md
+- docs/designsystem/gallery/index.html
+
+Icons (outlined): error
+
+Copyright Google LLC. Licensed under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with the
+License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+The full text of the Apache License, Version 2.0 is included in this
+repository as LICENSE-APACHE-2.0.
+
+--------------------------------------------------------------------------------
+Fonts loaded at runtime (not redistributed)
+--------------------------------------------------------------------------------
+
+The following fonts are loaded from Google Fonts when the HTML files are
+opened. No font files are included in this repository.
+
+- Noto Sans JP — SIL Open Font License 1.1
+- Material Symbols Rounded — Apache License 2.0

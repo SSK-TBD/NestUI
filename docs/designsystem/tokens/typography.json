@@ -1,0 +1,63 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Typography tokens — NestUI light mode. Source of truth: this file (NestUI tokens / Figma textStyles). UI font: Noto Sans JP.",
+  "typography": {
+    "fontFamily": {
+      "base": { "$value": "\"Noto Sans JP\", system-ui, -apple-system, sans-serif", "$type": "fontFamily" },
+      "mono": { "$value": "\"JetBrains Mono\", \"SF Mono\", monospace", "$type": "fontFamily" }
+    },
+    "fontWeight": {
+      "regular": { "$value": 400, "$type": "fontWeight", "$description": "Body。" },
+      "medium":  { "$value": 500, "$type": "fontWeight", "$description": "Label。" },
+      "bold":    { "$value": 700, "$type": "fontWeight", "$description": "Title（見出しは bold。semibold 600 は使わない）。" }
+    },
+    "fontSize": {
+      "xs": { "$value": "11px", "$type": "dimension", "$description": "Body/xs。補足・メタ。" },
+      "sm": { "$value": "12px", "$type": "dimension", "$description": "Body/sm。ラベル・キャプション。" },
+      "md": { "$value": "14px", "$type": "dimension", "$description": "Body/md。本文（デフォルト）。" },
+      "lg": { "$value": "16px", "$type": "dimension", "$description": "Title/md。小見出し。" },
+      "xl": { "$value": "21px", "$type": "dimension", "$description": "Title/lg。見出し（token スケール最大）。" }
+    },
+    "lineHeight": {
+      "tight":   { "$value": 1.4, "$type": "number", "$description": "見出し。" },
+      "normal":  { "$value": 1.5, "$type": "number", "$description": "ラベル・UI 要素。" },
+      "relaxed": { "$value": 2.0, "$type": "number", "$description": "本文（leading-relaxed）。" }
+    },
+    "letterSpacing": {
+      "normal": { "$value": "0em",    "$type": "dimension", "$description": "Body。" },
+      "label":  { "$value": "0.02em", "$type": "dimension", "$description": "Label。" },
+      "title":  { "$value": "0.03em", "$type": "dimension", "$description": "Title。" }
+    },
+    "scale": {
+      "headline1": {
+        "fontSize":      { "$value": "{typography.fontSize.xl}" },
+        "fontWeight":    { "$value": "{typography.fontWeight.bold}" },
+        "lineHeight":    { "$value": "{typography.lineHeight.tight}" },
+        "letterSpacing": { "$value": "{typography.letterSpacing.title}" }
+      },
+      "headline2": {
+        "fontSize":      { "$value": "{typography.fontSize.lg}" },
+        "fontWeight":    { "$value": "{typography.fontWeight.bold}" },
+        "lineHeight":    { "$value": "{typography.lineHeight.tight}" },
+        "letterSpacing": { "$value": "{typography.letterSpacing.title}" }
+      },
+      "body": {
+        "fontSize":      { "$value": "{typography.fontSize.md}" },
+        "fontWeight":    { "$value": "{typography.fontWeight.regular}" },
+        "lineHeight":    { "$value": "{typography.lineHeight.relaxed}" },
+        "letterSpacing": { "$value": "{typography.letterSpacing.normal}" }
+      },
+      "label": {
+        "fontSize":      { "$value": "{typography.fontSize.sm}" },
+        "fontWeight":    { "$value": "{typography.fontWeight.medium}" },
+        "lineHeight":    { "$value": "{typography.lineHeight.normal}" },
+        "letterSpacing": { "$value": "{typography.letterSpacing.label}" }
+      },
+      "caption": {
+        "fontSize":      { "$value": "{typography.fontSize.xs}" },
+        "fontWeight":    { "$value": "{typography.fontWeight.regular}" },
+        "lineHeight":    { "$value": "{typography.lineHeight.normal}" }
+      }
+    }
+  }
+}
