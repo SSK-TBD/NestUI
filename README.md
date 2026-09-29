@@ -131,3 +131,17 @@ NestUI/
 - **第三者素材**: アイコンに [Lucide](https://lucide.dev/)（ISC License。Feather 由来のアイコンは MIT License）・[Heroicons](https://heroicons.com/) v1（MIT License）・[Material Icons](https://fonts.google.com/icons)（Apache License 2.0）の SVG を埋め込んでいる。フォント（Noto Sans JP / Material Symbols Rounded）は Google Fonts から実行時に読み込み、同梱していない
 
 商標の条項と、各アイコンのライセンス本文・埋め込みファイルの一覧は [NOTICE](NOTICE) を参照。
+
+## Project credits
+
+This project was developed by the Canary Design Team.
+
+- Design system / UI principles: @YuseiTeramoto
+- AI workflow / system architecture: @varhira
+- Component and guideline implementation: @varhira, @YuseiTeramoto
+- Product context and review: @YuseiTeramoto
+
+Current maintainers: @YuseiTeramoto, @varhira
+
+For commit-level contributions, see
+[GitHub Contributors](../../graphs/contributors).
