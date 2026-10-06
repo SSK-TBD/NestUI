@@ -127,7 +127,7 @@ NestUI/
 
 [MIT License](LICENSE)（Copyright (c) 2026 Canary Inc.）。
 
-- **商標**: 「CANARY Cloud」の名称・ロゴは Canary Inc. の商標で、MIT License の対象外
+- **商標**: 「カナリー」「Canary」「カナリークラウド」「CANARY Cloud」の名称・ロゴは Canary Inc. の商標で、MIT License の対象外
 - **第三者素材**: アイコンに [Lucide](https://lucide.dev/)（ISC License。Feather 由来のアイコンは MIT License）・[Heroicons](https://heroicons.com/) v1（MIT License）・[Material Icons](https://fonts.google.com/icons)（Apache License 2.0）の SVG を埋め込んでいる。フォント（Noto Sans JP / Material Symbols Rounded）は Google Fonts から実行時に読み込み、同梱していない
 
 商標の条項と、各アイコンのライセンス本文・埋め込みファイルの一覧は [NOTICE](NOTICE) を参照。
