@@ -1,0 +1,61 @@
+# このファイルは SSK-TBD/git-security の org-workflows/ から配布している。
+# 直接編集しても日次の sync で上書き PR が作成されるため、変更は git-security 側で行うこと。
+# 誤検知の除外は各 repo の .gitleaks.toml で行う。
+name: gitleaks
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+permissions: {}
+jobs:
+  gitleaks:
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      # gitleaks-action は organization での利用に license key が必要なため、binary を直接使う。
+      - name: Install gitleaks
+        env:
+          VERSION: 8.30.1
+          SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+        run: |
+          set -euo pipefail
+          curl -fsSL -o "$RUNNER_TEMP/gitleaks.tar.gz" \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${VERSION}/gitleaks_${VERSION}_linux_x64.tar.gz"
+          echo "${SHA256}  ${RUNNER_TEMP}/gitleaks.tar.gz" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/gitleaks.tar.gz" -C "$RUNNER_TEMP" gitleaks
+      # git モード (commit 範囲の検査) は、キーワード行の次の行に値がある形式を検知できず偽陰性になる
+      # (bluage の CRM-6833 で確認済み)。そのため変更されたファイルを一時ディレクトリにコピーし、
+      # dir モードでファイル全体を検査する。PR の途中の commit で追加して消した secret は検査対象外。
+      - name: Run gitleaks (dir scan of changed files)
+        env:
+          # PR は merge commit を checkout しているため、HEAD^1 (base 側) との差分が PR の変更になる。
+          BASE: ${{ github.event_name == 'pull_request' && 'HEAD^1' || github.event.before }}
+        run: |
+          set -euo pipefail
+          # before が全て 0 の場合 (branch の新規作成) は比較元が無いため、空 tree と比較して全ファイルを検査する。
+          if [ -z "${BASE//0/}" ]; then
+            BASE=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+          fi
+          tmpdir=$(mktemp -d)
+          # プロセス置換だと git diff の失敗を set -e で拾えず、何も検査せずに pass するため、いったんファイルに書く。
+          # "--" は、repo に HEAD という名前のファイルがあっても revision として解釈させるため。
+          # --ignore-submodules: submodule の path は directory で、cp -P が失敗するため除く (中身は submodule 側の repo で検査する)。
+          git diff -z --name-only --diff-filter=ACMR --ignore-submodules "$BASE" HEAD -- >"$RUNNER_TEMP/changed"
+          while IFS= read -r -d "" f; do
+            mkdir -p -- "$tmpdir/$(dirname -- "$f")"
+            cp -P -- "$f" "$tmpdir/$f"
+          done <"$RUNNER_TEMP/changed"
+          opts=()
+          if [ -f .gitleaks.toml ]; then
+            opts+=(-c "$GITHUB_WORKSPACE/.gitleaks.toml")
+          fi
+          cd "$tmpdir"
+          # --redact: 検出した secret の値を log に出さない。検出時は exit 1 で fail する。
+          "$RUNNER_TEMP/gitleaks" dir . --redact --no-banner --verbose \
+            --gitleaks-ignore-path "$GITHUB_WORKSPACE" "${opts[@]}"

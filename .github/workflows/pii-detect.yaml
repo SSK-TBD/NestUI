@@ -1,0 +1,120 @@
+# このファイルは SSK-TBD/git-security の org-workflows/ から配布している。
+# 直接編集しても日次の sync で上書き PR が作成されるため、変更は git-security 側で行うこと。
+# 誤検知の除外は各 repo の .pii-detector.yaml / .jp-pii.toml ではなく、サーバー側の設定に従う。
+#
+# 変更されたファイルを SSK-TBD/pii-detector の Cloud Run サーバーへ送り、検知結果を警告として表示する。
+# pii-detector の方針どおり、検知しても job は fail しない (サーバーに到達できない場合は fail する)。
+name: pii-detect
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+permissions: {}
+jobs:
+  pii-detect:
+    # fork からの PR には id-token: write が付与されず、WIF の認証が必ず失敗するため skip する。
+    if: github.event.pull_request.head.repo.fork != true
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    timeout-minutes: 360
+    permissions:
+      contents: read
+      id-token: write # Workload Identity Federation で Cloud Run を呼ぶため
+    env:
+      SERVER_URL: https://pii-detector-server-22765741149.asia-northeast1.run.app
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      # SSK-TBD 配下の全 repo に権限借用を許可している共有 service account を使う
+      # (定義は ops の terraform/platform/gcp/dev/github_actions.tf)。
+      - uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+        id: auth
+        with:
+          workload_identity_provider: projects/22765741149/locations/global/workloadIdentityPools/github-pii-detector-invoker/providers/github-pii-detector-invoker
+          service_account: pii-detector-invoker@canary-dev-214513.iam.gserviceaccount.com
+          token_format: id_token
+          id_token_audience: ${{ env.SERVER_URL }}
+      - name: Detect PII in changed files
+        env:
+          AUTH_TOKEN: ${{ steps.auth.outputs.id_token }}
+          # PR は merge commit を checkout しているため、HEAD^1 (base 側) との差分が PR の変更になる。
+          BASE: ${{ github.event_name == 'pull_request' && 'HEAD^1' || github.event.before }}
+        run: |
+          python3 - <<'PY'
+          import collections, json, os, subprocess, urllib.request
+
+          base = os.environ["BASE"]
+          if not base.strip("0"):
+              # branch の新規作成は比較元が無いため、空 tree と比較して全ファイルを対象にする
+              base = "4b825dc642cb6eb9a060e54bf8d69288fbee4904"
+          names = subprocess.run(
+              # "--" は、repo に HEAD という名前のファイルがあっても revision として解釈させるため。
+              ["git", "diff", "--name-only", "-z", "--diff-filter=ACMR", base, "HEAD", "--"],
+              check=True, capture_output=True,
+          ).stdout.decode().split("\0")
+
+          contents, skipped = {}, 0
+          for name in filter(None, names):
+              if not os.path.isfile(name) or os.path.islink(name):
+                  continue
+              try:
+                  if os.path.getsize(name) > 1_000_000:
+                      raise ValueError("too large")
+                  with open(name, encoding="utf-8") as f:
+                      contents[name] = f.read()
+              except ValueError:  # 1MB 超、または UTF-8 でない (バイナリ)
+                  skipped += 1
+
+          # サーバーの上限 (100 ファイル / 合計 2000 万文字 / 24MB) に収まるよう分割する
+          batches, size = [[]], 0
+          for name, content in contents.items():
+              if len(batches[-1]) >= 50 or size + len(content) > 5_000_000:
+                  batches.append([])
+                  size = 0
+              batches[-1].append({"path": name, "content": content})
+              size += len(content)
+
+          # workflow command の escape。ファイル名には改行・`,`・`:` を使えるため、escape しないと
+          # PR 作成者がファイル名で任意の workflow command を差し込める。
+          def esc(s, prop=False):
+              s = str(s).replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+              return s.replace(":", "%3A").replace(",", "%2C") if prop else s
+
+          counts = collections.Counter()
+          degraded = collections.Counter()
+          for batch in filter(None, batches):
+              req = urllib.request.Request(
+                  os.environ["SERVER_URL"] + "/v1/analyze",
+                  data=json.dumps({"files": batch}, ensure_ascii=False).encode(),
+                  headers={
+                      "Content-Type": "application/json",
+                      "Authorization": "Bearer " + os.environ["AUTH_TOKEN"],
+                  },
+              )
+              with urllib.request.urlopen(req, timeout=300) as resp:
+                  result = json.load(resp)
+              # 検知したテキスト本文 (PII 候補そのもの) は log に出さない。種別と位置だけを表示する。
+              # サーバーの warnings 本文も出さない (層 2 の stderr など入力テキストを含みうるうえ、
+              # 同じ警告が全ファイルに複製されて PII 候補の annotation が埋もれるため)。
+              # 解析が不完全なファイルは status と code だけを集計する。
+              for f in result["files"]:
+                  path = f["path"]
+                  status = f.get("status", "ok")
+                  if status not in ("ok", "skipped"):
+                      code = (f.get("error") or {}).get("code") or ",".join(f.get("layers_failed") or [])
+                      degraded[f"status={status}, code={code}"] += 1
+                  for d in f["detections"]:
+                      line = contents[path].count("\n", 0, d["start"]) + 1
+                      print(f"::warning file={esc(path, True)},line={line}::PII 候補: {esc(d['entity_type'])}")
+                      counts[d["entity_type"]] += 1
+
+          for reason, n in sorted(degraded.items()):
+              print(f"::warning::pii-detector: {n} ファイルの解析が不完全です ({esc(reason)})")
+
+          summary = [f"## pii-detect", "", f"検査 {len(contents)} ファイル / 対象外 {skipped} ファイル / 解析が不完全 {sum(degraded.values())} ファイル / PII 候補 {sum(counts.values())} 件", ""]
+          if counts:
+              summary += ["| 種別 | 件数 |", "| --- | --- |"] + [f"| {k} | {v} |" for k, v in sorted(counts.items())]
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
+              f.write("\n".join(summary) + "\n")
+          PY
